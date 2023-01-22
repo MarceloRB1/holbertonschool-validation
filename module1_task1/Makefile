@@ -3,5 +3,5 @@ clean:
 build:
 	hugo > /dev/null 2>&1
 post:
-	hugo new posts/${POST_NAME}.md
-	sed -i '/title/c\title: "${POST_TITLE}"' content/posts/${POST_NAME}.md
+	hugo new post/$(POST_NAME).md
+	echo 'title: "$(POST_TITLE)"' >> content/post/$(POST_NAME).md
