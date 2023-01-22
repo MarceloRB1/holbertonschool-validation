@@ -1,15 +1,15 @@
-build:
-    hugo -s dist/
+build:	## Generate the website from the markdown and configuration files in the directory ./dist
+	hugo > /dev/null 2>&1
 
-clean:
-    rm -rf dist/
 
-post:
-    hugo new post/$(POST_NAME).md
-    echo 'title: "$(POST_TITLE)"' >> content/post/$(POST_NAME).md
-## The "build" step uses the Hugo static site generator to generate the website from the markdown and configuration files in the "dist" directory.
+clean:	## Cleanup the content of the directory ./dist
+	rm -fr dist
 
-The "clean" step uses the "rm" command to remove the entire "dist" directory and all its contents.
 
-The "post" step uses the Hugo command "hugo new" to create a new markdown file with the filename specified by the "POST_NAME" environment variable in the "content/post" directory. It then uses the "echo" command to add the title specified by the "POST_TITLE" environment variable to the top of the new markdown file.
-##
+post:	## Creates a post with given POST_NAME and POST_TITLE
+	hugo new posts/$(POST_NAME).md
+	sed -i '/title/c\title: "$(POST_TITLE)"' content/posts/$(POST_NAME).md
+
+
+help:	## Provides information about all Makefile targets defined
+	@fgrep "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/##//'
